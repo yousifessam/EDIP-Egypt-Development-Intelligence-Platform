@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EDIP — منصة إيديب لذكاء التنمية المصرية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Cairo:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="nile-thread" aria-hidden="true"></div>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">وزارة التخطيط · دعم القرار التنموي</div>
+    <h1 class="wordmark">
+      <span class="latin">EDIP</span>
+      <span class="ar">منصة إيديب لذكاء التنمية المصرية</span>
+    </h1>
+    <p class="tagline">
+      نموذج تعلّم آلي مُدرَّب على بيانات ١٠٩ متغيرات من ٢٧ محافظة عبر ١٥ عامًا (٢٠١٠–٢٠٢٤)،
+      يتنبأ بمؤشر أولوية التنمية المصري (EDPI) لأي وحدة إدارية بناءً على مؤشراتها السكانية والصحية والتعليمية والاقتصادية والخدمية.
+    </p>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num">94.7%</span><span class="stat-label">دقة النموذج R²</span></div>
+      <div class="stat"><span class="stat-num">82,500</span><span class="stat-label">سجل تدريب وتقييم</span></div>
+      <div class="stat"><span class="stat-num">200</span><span class="stat-label">شجرة قرار (Gradient Boosting)</span></div>
+      <div class="stat"><span class="stat-num">27</span><span class="stat-label">محافظة مصرية</span></div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <section class="panel intro-panel">
+    <h2>المقياس النيلي للتنمية</h2>
+    <p>
+      كما كان قدماء المصريين يقيسون منسوب فيضان النيل بـ<strong>"المقياس"</strong> للتنبؤ بخصوبة الأرض وتحديد الضرائب،
+      تقيس إيديب اليوم "منسوب التنمية" في كل وحدة إدارية للتنبؤ بأولويات التخطيط وتوجيه الموارد.
+      حرّك المؤشرات أدناه أو اختر محافظة جاهزة، ثم اضغط <strong>"قِس المنسوب"</strong>.
+    </p>
+  </section>
+
+  <section class="predict-layout">
+
+    <div class="controls-column">
+
+      <div class="preset-bar">
+        <label for="govSelect">تحميل بيانات محافظة فعلية (آخر سنة مسجّلة)</label>
+        <select id="govSelect">
+          <option value="">— اختر محافظة —</option>
+        </select>
+      </div>
+
+      <form id="predictForm">
+        <div class="sector-grid" id="sectorGrid"></div>
+      </form>
+
+    </div>
+
+    <div class="gauge-column">
+      <div class="nilometer-card">
+        <h3>المقياس <span class="latin-small">EDPI</span></h3>
+        <div class="nilometer">
+          <svg viewBox="0 0 140 420" class="nilometer-svg" id="nilometerSvg">
+            <rect x="45" y="10" width="50" height="400" rx="6" class="nilo-shaft"/>
+            <clipPath id="waterClip">
+              <rect x="47" y="410" width="46" height="0" id="waterRect"/>
+            </clipPath>
+            <rect x="47" y="12" width="46" height="396" rx="4" class="nilo-water" clip-path="url(#waterClip)" id="waterFill"/>
+            <g id="tickMarks"></g>
+            <line x1="45" y1="10" x2="45" y2="410" class="nilo-edge"/>
+            <line x1="95" y1="10" x2="95" y2="410" class="nilo-edge"/>
+            <circle cx="70" cy="410" r="14" class="nilo-base"/>
+          </svg>
+          <div class="gauge-readout">
+            <span class="gauge-value" id="gaugeValue">—</span>
+            <span class="gauge-label" id="gaugeLabel">في انتظار القياس</span>
+          </div>
+        </div>
+        <button type="submit" form="predictForm" class="predict-btn" id="predictBtn">قِس المنسوب</button>
+        <div class="result-detail" id="resultDetail" hidden>
+          <div class="tier" id="tierBadge"></div>
+          <p class="result-note" id="resultNote"></p>
+          <div class="factors" id="factorsList"></div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <section class="panel model-card">
+    <h2>بطاقة النموذج</h2>
+    <div class="model-grid">
+      <div>
+        <h4>الخوارزمية</h4>
+        <p>Gradient Boosting Regressor — ٢٠٠ شجرة قرار بعمق ٣، معدل تعلّم ٠.١، تُنفَّذ بالكامل داخل المتصفح بلغة JavaScript دون أي اتصال بخادم.</p>
+      </div>
+      <div>
+        <h4>مقاييس الأداء (بيانات اختبار لم يرها النموذج)</h4>
+        <p>R² = ٠.٩٤٧ &nbsp;·&nbsp; متوسط الخطأ المطلق MAE = ٠.٠٣٦ &nbsp;·&nbsp; جذر متوسط مربع الخطأ RMSE = ٠.٠٤٤</p>
+      </div>
+      <div>
+        <h4>أهم العوامل المؤثرة</h4>
+        <p>معدل الفقر، معدل محو الأمية، نصيب الفرد من الناتج المحلي، تجميع القمامة، تغطية التأمين الصحي — بحسب أهمية كل متغير في قرارات النموذج.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>EDIP — Egypt Development Intelligence Platform · نموذج تجريبي (Stage 1) مبني على بيانات تمثيلية · جاهز لاستبدال البيانات الرسمية من CAPMAS ووزارتي الصحة والتعليم دون تغيير البنية</p>
+</footer>
+
+<script src="data.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
